@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cython", "Cython1\Cython.csproj", "{26EFB694-207B-47F2-B338-C8387F717D64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMain", "ConsoleMain\ConsoleMain.csproj", "{1B84101B-AB00-4335-801C-9C7C9F2F06ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructures", "DataStructures\DataStructures.csproj", "{B9634D78-E60D-485D-B57A-4F7650CE09E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{26EFB694-207B-47F2-B338-C8387F717D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26EFB694-207B-47F2-B338-C8387F717D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26EFB694-207B-47F2-B338-C8387F717D64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B84101B-AB00-4335-801C-9C7C9F2F06ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B84101B-AB00-4335-801C-9C7C9F2F06ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B84101B-AB00-4335-801C-9C7C9F2F06ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B84101B-AB00-4335-801C-9C7C9F2F06ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9634D78-E60D-485D-B57A-4F7650CE09E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9634D78-E60D-485D-B57A-4F7650CE09E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9634D78-E60D-485D-B57A-4F7650CE09E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9634D78-E60D-485D-B57A-4F7650CE09E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,8 @@
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\obj\Debug\Cython.csprojAssemblyReference.cache
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\bin\Debug\Cython1.dll
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\bin\Debug\Cython1.pdb
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\bin\Debug\DataStructures.dll
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\bin\Debug\DataStructures.pdb
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\obj\Debug\Cython.csproj.CopyComplete
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\obj\Debug\Cython1.dll
+C:\Users\Elad\source\repos\Cython\Cython\Cython1\obj\Debug\Cython1.pdb
