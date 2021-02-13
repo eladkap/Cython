@@ -47,7 +47,7 @@ namespace DataStructures.Classes
         }
     }
 
-    public class CList<T> : object, IDisposable
+    public class CList<T> : object
     {
         private CNode<T> _head;
         private CNode<T> _tail;
@@ -105,7 +105,6 @@ namespace DataStructures.Classes
                 Append(node.Data);
                 node = node.Next;
             }
-            _length += list._length;
         }
 
         public void PopBack()
@@ -116,7 +115,7 @@ namespace DataStructures.Classes
             }
             CNode<T> curr = _head.Next;
             CNode<T> prev = _head;
-            while (curr.Next != this._tail)
+            while (curr.Next != _tail)
             {
                 curr = curr.Next;
                 prev = prev.Next;
@@ -145,15 +144,9 @@ namespace DataStructures.Classes
 	        _head.Next = newNode;
         }
 
-
-        public void Dispose()
-        {
-            Clear();
-        }
-
         ~CList()
         {
-            Dispose();
+            Clear();
         }
 
         public int Length
@@ -261,7 +254,7 @@ namespace DataStructures.Classes
             {
                 return "[]";
             }
-            string s = "";
+            string s = "[";
             CNode<T> node = _head.Next;
             while (node.Next != _tail)
             {
