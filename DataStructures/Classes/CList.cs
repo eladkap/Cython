@@ -121,7 +121,6 @@ namespace DataStructures.Classes
                 prev = prev.Next;
             }
             prev.Next = _tail;
-            //curr.Dispose();
             _length--;
         }
 
@@ -133,7 +132,6 @@ namespace DataStructures.Classes
             }
             CNode<T> first = _head.Next;
             _head.Next = first.Next;
-            //first.Dispose();
             _length--;
         }
 
@@ -158,6 +156,10 @@ namespace DataStructures.Classes
         {
             get {
                 int l = _length;
+                if (l == 0)
+                {
+                    throw new Exception("ListIsEmptyError");
+                }
                 if (index < 0 || index >= l)
                 {
                     throw new Exception("IndexOutOfBoundsError");
@@ -235,17 +237,18 @@ namespace DataStructures.Classes
             {
                 return;
             }
-            CNode<T> prevNode = _head;
-            CNode<T> currNode = _head.Next;
-            CNode<T> nextNode = _head.Next.Next;
-            while (currNode != _tail)
+            _tail = _head;
+            CNode<T> prevNode = null;
+            CNode<T> currNode = _head;
+            CNode<T> nextNode = null;
+            while (currNode != null)
             {
                 nextNode = currNode.Next;
                 currNode.Next = prevNode;
                 prevNode = currNode;
                 currNode = nextNode;
             }
-            _head.Next = prevNode;
+            _head = prevNode;
         }
 
         public override string ToString()

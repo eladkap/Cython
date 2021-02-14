@@ -24,34 +24,10 @@ namespace ConsoleMain
             }
             Console.WriteLine(l1);
 
-            CList<int> l2 = new CList<int>();
-            for (int i = 11; i <= 16; i++)
-            {
-                l2.Append(i);
-            }
-
-            l1.Extend(l2);
+            l1.Reverse();
             Console.WriteLine(l1);
 
-            CList<string> l3 = new CList<string>();
-            l3.Append("abcd");
-            l3.Append("xyz");
-            l3.Append("qwerty");
-
-            CList<string> l4=new CList<string>(l3);
-            Console.WriteLine("l3: " + l3);
-            Console.WriteLine("l4: " + l4);
-            l4.PopFront();
-            Console.WriteLine("l3: " + l3);
-            Console.WriteLine("l4: " + l4);
-
-            l4.PushFront("michal");
-            Console.WriteLine(l4);
-
-            l2.Reverse();
-            Console.WriteLine(l2);
-
-            Console.WriteLine("Finish.");
+          
             //Console.ReadLine();
         }
 
