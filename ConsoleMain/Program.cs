@@ -17,16 +17,35 @@ namespace ConsoleMain
             {
                 l1.Append(i);
             }
-
             Console.WriteLine(l1.Count(1));
+            //Console.ReadLine();
+        }
 
+        public static void RunStack()
+        {
+            CStack<int> s = new CStack<int>();
+            for (int i = 1; i <= 3; i++)
+            {
+                s.Push(i);
+            }
+            Console.WriteLine(s);
+            s.Pop();
+            Console.WriteLine(s);
+            s.Pop();
+            Console.WriteLine(s);
+            s.Pop();
+            Console.WriteLine(s);
+           
+            Console.WriteLine(s.Size);
+            Console.WriteLine(s.IsEmpty());
 
             //Console.ReadLine();
         }
 
         static void Main(string[] args)
         {
-            RunList();
+            //RunList();
+            RunStack();
         }
     }
 }
