@@ -51,10 +51,64 @@ namespace ConsoleMain
             //Console.ReadLine();
         }
 
+        public static void RunArray()
+        {
+            CArray<string> a = new CArray<string>();
+            char letter = 'A';
+            for (int i = 0; i < 12; i++)
+            {
+                a.PushBack(letter.ToString());
+                letter++;
+            }
+            Console.WriteLine(a);
+            a.Reverse();
+            Console.WriteLine(a);
+            a.Sort();
+            Console.WriteLine(a);
+            for (int i = 0; i < a.Length; i++)
+            {
+                Console.WriteLine(a[i]);
+            }
+            a[0] = "Z";
+            Console.WriteLine(a);
+
+            CArray<string> b = new CArray<string>();
+            letter = 'Q';
+            for (int i = 0; i < 5; i++)
+            {
+                b.PushBack(letter.ToString());
+                letter++;
+            }
+
+            a.Extend(b);
+            Console.WriteLine(a);
+
+            Console.WriteLine(a);
+            a.Shuffle();
+            Console.WriteLine(a);
+            a.Sort();
+            Console.WriteLine(a);
+
+            b = new CArray<string>(a);
+            Console.WriteLine(b);
+            Console.WriteLine(a.Equals(b));
+            b.PopBack();
+            Console.WriteLine(b);
+            b.PopFront();
+            Console.WriteLine(b);
+            a[3] = "Z";
+            Console.WriteLine(a);
+            Console.WriteLine(a.Count("A"));
+            Console.WriteLine(a.Count("Z"));
+            Console.WriteLine(a.Find("A"));
+            Console.WriteLine(a.Find("Z"));
+        }
+
         static void Main(string[] args)
         {
-            RunList();
+            //RunList();
             //RunStack();
+            RunArray();
         }
     }
 }
