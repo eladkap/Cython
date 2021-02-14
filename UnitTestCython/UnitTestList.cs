@@ -112,6 +112,51 @@ namespace UnitTestCython
             Assert.ThrowsException<Exception>(() => l1[-1]);
         }
 
+        [TestMethod]
+        public void TestListEquals()
+        {
+            CList<int> l1 = new CList<int>();
+            for (int i = 0; i <= 9; i++)
+            {
+                l1.Append(i);
+            }
+            CList<int> l2 = new CList<int>();
+            for (int i = 0; i <= 9; i++)
+            {
+                l2.Append(i);
+            }
+            Assert.IsTrue(l1.Equals(l2));
+        }
 
+        [TestMethod]
+        public void TestListCount()
+        {
+            CList<int> l1 = new CList<int>();
+            for (int i = 0; i <= 9; i++)
+            {
+                l1.Append(i);
+            }
+            l1.Append(1);
+            l1.Append(2);
+            l1.Append(8);
+            l1.Append(9);
+            l1.Append(8);
+            Assert.AreEqual(l1.Count(12), 0);
+            Assert.AreEqual(l1.Count(1), 2);
+            Assert.AreEqual(l1.Count(8), 3);
+        }
+
+        [TestMethod]
+        public void TestListFind()
+        {
+            CList<int> l1 = new CList<int>();
+            for (int i = 0; i <= 9; i++)
+            {
+                l1.Append(i);
+            }  
+            Assert.AreEqual(l1.Find(12), -1);
+            Assert.AreEqual(l1.Find(1), 1);
+            Assert.AreEqual(l1.Find(8), 8);
+        }
     }
 }
