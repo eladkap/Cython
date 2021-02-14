@@ -22,12 +22,12 @@ Cython is a simple Python-like interpreter implemented in C#.
 - float
 - bool
 ### Collections
-- CArray (dynamic array)
-- CList
-- CSet
-- CDictionary
-- CStack
-- CQueue
+- Array (dynamic array)
+- List
+- Set
+- Dictionary
+- Stack
+- Queue
 
 ## Special Types
 - complex (complex numbers)
