@@ -7,17 +7,26 @@ using System.Threading.Tasks;
 
 namespace ConsoleMain
 {
-
     class Program
     {
         public static void RunList()
         {
             CList<int> l1 = new CList<int>();
-            for (int i = 0; i <= 9; i++)
+            for (int i = 3; i <= 9; i++)
             {
                 l1.Append(i);
             }
-            Console.WriteLine(l1.Count(1));
+            Console.WriteLine(l1.Hash());
+
+            CList<string> l2 = new CList<string>();
+            l2.Append("a");
+            l2.Append("b");
+            l2.Append("c");
+            
+            l2.Append("x");
+            l2.Append("y");
+            l2.Append("z");
+            Console.WriteLine(l2.Hash());
             //Console.ReadLine();
         }
 
@@ -44,8 +53,8 @@ namespace ConsoleMain
 
         static void Main(string[] args)
         {
-            //RunList();
-            RunStack();
+            RunList();
+            //RunStack();
         }
     }
 }

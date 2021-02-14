@@ -268,6 +268,27 @@ namespace DataStructures.Classes
             return s;
         }
 
+        public ulong Hash()
+        {
+            if (Length == 0)
+            {
+                return 0;
+            }
+            Type type = typeof(T);
+            T t = _head.Next.Data;
+            if (type.Name.ToLower().Contains("int"))
+            {
+                return Convert.ToUInt64(t);
+            }
+            else if (type.Name.ToLower() == "string"){
+                return (ulong)(t.ToString().GetHashCode());
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         public override int GetHashCode()
         {
             return 0;
