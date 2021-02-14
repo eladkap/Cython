@@ -33,6 +33,7 @@ namespace UnitTestCython
             Assert.AreEqual(s.Top(), "b");
             s.Pop();
             Assert.AreEqual(s.Top(), "a");
+
             s.Pop();
             Assert.IsTrue(s.IsEmpty());
             Assert.ThrowsException<Exception>(() => s.Top());

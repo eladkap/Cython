@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnitTestQueue.cs" />
     <Compile Include="UnitTestStack.cs" />
     <Compile Include="UnitTestList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
