@@ -1,0 +1,8 @@
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\bin\Debug\netstandard2.0\DataStructures.deps.json
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\bin\Debug\netstandard2.0\DataStructures.dll
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\bin\Debug\netstandard2.0\DataStructures.pdb
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\obj\Debug\netstandard2.0\DataStructures.AssemblyInfoInputs.cache
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\obj\Debug\netstandard2.0\DataStructures.AssemblyInfo.cs
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\obj\Debug\netstandard2.0\DataStructures.dll
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\obj\Debug\netstandard2.0\DataStructures.pdb
+C:\Users\Elad\source\repos\Cython\Cython\DataStructures\obj\Debug\netstandard2.0\DataStructures.csprojAssemblyReference.cache

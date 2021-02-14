@@ -1,0 +1,15 @@
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\UnitTestCython.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\UnitTestCython.pdb
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\DataStructures.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\DataStructures.pdb
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\obj\Debug\UnitTestCython.csprojAssemblyReference.cache
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\obj\Debug\UnitTestCython.csproj.CopyComplete
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\obj\Debug\UnitTestCython.dll
+C:\Users\Elad\source\repos\Cython\Cython\UnitTestCython\obj\Debug\UnitTestCython.pdb
