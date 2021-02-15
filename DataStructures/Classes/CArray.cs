@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DataStructures.Classes
 {
-    public class CArray<T> : object where T : IComparable
+    public class CArray<T> : object, IEnumerable<T>, IEnumerator<T> where T : IComparable
     {
         private T[] _arr;
         private int _length;
         private int _size;
+        private int _current;
 
         public CArray()
         {
             _arr = null;
             _length = 0;
             _size = 0;
+            _current = -1;
         }
 
         public CArray(int size)
@@ -248,6 +251,10 @@ namespace DataStructures.Classes
 
         public int Length { get { return _length; } }
 
+        public T Current => _arr[_current];
+
+        object IEnumerator.Current => Current;
+
         public int Count(T t)
         {
             int c = 0;
@@ -307,6 +314,31 @@ namespace DataStructures.Classes
         public override int GetHashCode()
         {
             return 0;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public bool MoveNext()
+        {
+            _current++;
+            return _current < _length;
+        }
+
+        public void Reset()
+        {
+            _current = -1;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

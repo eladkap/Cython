@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DataStructures.Classes
 {
@@ -47,17 +49,19 @@ namespace DataStructures.Classes
         }
     }
 
-    public class CList<T> : object
+    public class CList<T> : object, IEnumerable<T>, IEnumerator<T>
     {
         private CNode<T> _head;
         private CNode<T> _tail;
         private int _length;
+        private CNode<T> _current;
 
         public CList()
         {
             _head = new CNode<T>();
             _tail = new CNode<T>();
             _head.Next = _tail;
+            _current = _head;
             _length = 0;
         }
 
@@ -139,7 +143,7 @@ namespace DataStructures.Classes
             CNode<T> newNode = new CNode<T>(t);
             CNode<T> firstNode = _head.Next;
             newNode.Next = firstNode;
-	        _head.Next = newNode;
+            _head.Next = newNode;
         }
 
         ~CList()
@@ -151,6 +155,10 @@ namespace DataStructures.Classes
         {
             get { return _length; }
         }
+
+        public T Current => _current.Data;
+
+        object IEnumerator.Current => Current;
 
         public T this[int index]
         {
@@ -292,6 +300,31 @@ namespace DataStructures.Classes
         public override int GetHashCode()
         {
             return 0;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public bool MoveNext()
+        {
+            _current = _current.Next;
+            return _current != _tail;
+        }
+
+        public void Reset()
+        {
+            _current = _head;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
