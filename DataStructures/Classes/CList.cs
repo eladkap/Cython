@@ -11,12 +11,12 @@ namespace DataStructures.Classes
 
         public CNode(T data)
         {
-            this._data = data;
-            this._next = null;
+            _data = data;
+            _next = null;
         }
 
-        public CNode(): this(default(T))
-        {}
+        public CNode() : this(default(T))
+        { }
 
         public T Data
         {
