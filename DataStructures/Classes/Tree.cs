@@ -12,8 +12,8 @@ namespace DataStructures.Classes
         private TreeNode<K, V> _right;
         private TreeNode<K, V> _parent;
         private int _level;
-        private int _height;
-        private int _bf;
+        private int _hash;
+
 
         public TreeNode(K key, V value, int level)
         {
@@ -23,8 +23,7 @@ namespace DataStructures.Classes
             _right = null;
             _parent = null;
             _level = level;
-            _height = 0;
-            _bf = 0;
+            _hash = key.GetHashCode();
         }
 
         public TreeNode() : this(default(K), default(V), 0)
@@ -62,15 +61,8 @@ namespace DataStructures.Classes
 
         public int Level { get => _level; }
 
-        public int Height { 
-            get => _height;
-            set { _height = value; }
-        }
+        public int Hash { get => _hash; }
 
-        public int BF { 
-            get => _bf;
-            set { _bf = value; }
-        }
 
         public bool IsLeaf
         {
@@ -93,7 +85,7 @@ namespace DataStructures.Classes
 
         public override string ToString()
         {
-            return _key.ToString();
+            return "(" + _key.ToString() + ", " + _value.ToString() + ")";
         }
     }
 
@@ -118,6 +110,7 @@ namespace DataStructures.Classes
             Dispose(root.Right);
             root = null;
         }
+
         ~Tree()
         {
             Dispose(_root);
@@ -127,39 +120,25 @@ namespace DataStructures.Classes
 
         public int Length { get => _length; }
 
-        public TreeNode<K,V> Find(K key)
+        public TreeNode<K, V> Find(K key)
         {
             TreeNode<K, V> node = _root;
             while (node != null)
             {
-                if (node.Key.Equals(key))
+                if (node.Key.GetHashCode() == key.GetHashCode())
                 {
                     return node;
                 }
-                if (key.CompareTo(node.Key) < 0)
+                if (key.GetHashCode() < node.Key.GetHashCode())
                 {
                     node = node.Left;
                 }
-                else if (key.CompareTo(node.Key) > 0)
+                else if (key.GetHashCode() > node.Key.GetHashCode())
                 {
                     node = node.Right;
                 }
             }
             return null;
-        }
-
-        private bool Retrace(TreeNode<K, V> node)
-        {
-            bool isBalanced = true;
-            while (node != null)
-            {
-                int leftHeight = (node.Left == null) ? 0 : node.Left.Height;
-                int rightHeight = (node.Right == null) ? 0 : node.Right.Height;
-                node.Height = Math.Max(leftHeight, rightHeight) + 1;
-                node.BF = leftHeight - rightHeight;
-                node = node.Parent;
-            }
-            return isBalanced;
         }
 
         public void Insert(K key, V value)
@@ -173,16 +152,16 @@ namespace DataStructures.Classes
             TreeNode<K, V> node = _root;
             while (node != null)
             {
-                if (node.Key.Equals(key))
+                if (node.Key.GetHashCode() == key.GetHashCode())
                 {
                     return;
                 }
-                if (node.Left != null && key.CompareTo(node.Key) < 0)
+                if (node.Left != null && key.GetHashCode() < node.Key.GetHashCode())
                 {
                     node = node.Left;
                     continue;
                 }
-                if (node.Right != null && key.CompareTo(node.Key) > 0)
+                if (node.Right != null && key.GetHashCode() > node.Key.GetHashCode())
                 {
                     node = node.Right;
                     continue;
@@ -193,7 +172,7 @@ namespace DataStructures.Classes
             TreeNode<K, V> newNode = new TreeNode<K, V>(key, value, level);
             newNode.Parent = node;
 
-            if (key.CompareTo(node.Key) < 0)
+            if (key.GetHashCode() < node.Key.GetHashCode())
             {
                 node.Left = newNode;
             }
@@ -203,19 +182,6 @@ namespace DataStructures.Classes
             }
 
             _length++;
-
-            //UpdateHeight(newNode);
-            bool isBalanced = Retrace(newNode);
-
-            if (!isBalanced)
-            {
-                Rotate();
-            }
-        }
-
-        private void Rotate()
-        {
-            
         }
 
         public void SetItem(K key, V value)
@@ -236,7 +202,7 @@ namespace DataStructures.Classes
             _length = 0;
         }
 
-        private TreeNode<K, V> FindNextSuccessor(TreeNode<K, V> node)
+        private TreeNode<K, V> FindNextSuccessorOld(TreeNode<K, V> node)
         {
             if (node == null || node.Right == null)
             {
@@ -248,6 +214,136 @@ namespace DataStructures.Classes
                 succ = succ.Left;
             }
             return succ;
+        }
+
+        private TreeNode<K, V> FindNextSuccessor(TreeNode<K, V> node)
+        {
+            TreeNode<K, V> succ = null;
+            CList<TreeNode<K, V>> nodes = Nodes();
+            int i = 0;
+            for (; i < nodes.Length; i++)
+            {
+                if (node.Key.Equals(nodes[i].Key))
+                {
+                    break;
+                }
+            }
+            succ = (i < nodes.Length - 1) ? nodes[i + 1] : null;
+            return succ;
+        }
+
+        public void Remove(K key)
+        {
+            TreeNode<K, V> node = Find(key);
+            if (node == null)
+            {
+                return;
+            }
+            // node is a leaf
+            if (node.IsLeaf)
+            {
+                TreeNode<K, V> parent = node.Parent;
+                // node to be deleted is the root
+                if (parent == null)
+                {
+                    _root = null;
+                    return;
+                }
+                if (parent.Left == node)
+                {
+                    parent.Left = null;
+                }
+                else
+                {
+                    parent.Right = null;
+                }
+                node = null;
+                return;
+            }
+            // node has a single left child
+            if (node.Left != null && node.Right == null)
+            {
+                TreeNode<K, V> leftNode = node.Left;
+                node.Key = leftNode.Key;
+                node.Value = leftNode.Value;
+                node.Left = leftNode.Left;
+                node.Right = leftNode.Right;
+                node.Left = null;
+                return;
+            }
+            // node has a single right child
+            if (node.Right != null && node.Left == null)
+            {
+                TreeNode<K, V> rightNode = node.Right;
+                node.Key = rightNode.Key;
+                node.Value = rightNode.Value;
+                node.Left = rightNode.Left;
+                node.Right = rightNode.Right;
+                node.Right = null;
+                return;
+            }
+            // node has two children
+            if (node.Left != null && node.Right != null)
+            {
+                TreeNode<K, V> succ = FindNextSuccessor(node);
+                if (succ == null)
+                {
+                    return;
+                }
+                node.Key = succ.Key;
+                node.Value = succ.Value;
+                if (succ.Parent.Left == succ)
+                {
+                    succ.Parent.Left = null;
+                }
+                else
+                {
+                    succ.Parent.Right = null;
+                }
+                succ = null;
+            }
+        }
+
+        private void InorderScan(TreeNode<K, V> node, CList<K> list)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            InorderScan(node.Left, list);
+            list.Append(node.Key);
+            InorderScan(node.Right, list);
+        }
+
+        private void InorderScanNodes(TreeNode<K, V> node, CList<TreeNode<K, V>> nodes)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            InorderScanNodes(node.Left, nodes);
+            nodes.Append(node);
+            InorderScanNodes(node.Right, nodes);
+        }
+
+        public CList<K> Keys()
+        {
+            CList<K> keys = new CList<K>();
+            InorderScan(_root, keys);
+            return keys;
+        }
+
+        public CList<TreeNode<K, V>> Nodes()
+        {
+            CList<TreeNode<K, V>> nodes = new CList<TreeNode<K, V>>();
+            InorderScanNodes(_root, nodes);
+            return nodes;
+        }
+
+        public override string ToString()
+        {
+            CList<TreeNode<K, V>> nodes = Nodes();  
+            return  "T:" + nodes;
         }
     }
 }

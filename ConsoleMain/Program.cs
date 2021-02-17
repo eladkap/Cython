@@ -59,11 +59,33 @@ namespace ConsoleMain
             }      
         }
 
+        private static void RunTree()
+        {
+            Tree<string, int> tree = new Tree<string, int>();
+            Console.WriteLine(tree.Length);
+            Console.WriteLine(tree);
+            string[] words = { "one", "two", "three", "four", "five" };
+            for (int i = 0; i < 5; i++)
+            {
+                tree.Insert(words[i], i + 1);
+            }
+            var keys = tree.Keys();
+            Console.WriteLine(tree);
+            Console.WriteLine(keys);
+            Console.WriteLine(tree.Length);
+            Console.WriteLine(tree);
+            tree.Remove("one");
+            Console.WriteLine(tree);
+        }
+
         static void Main(string[] args)
         {
             //RunList();
             //RunStack();
-            RunArray();
+            //RunArray();
+            RunTree();
         }
+
+        
     }
 }
