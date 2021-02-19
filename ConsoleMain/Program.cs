@@ -59,25 +59,50 @@ namespace ConsoleMain
             }      
         }
 
-        private static void RunTree()
+        private static void Assert(bool cond)
         {
-            Tree<string, int> tree = new Tree<string, int>();
-            Console.WriteLine(tree.Length);
-            Console.WriteLine(tree);
-            string[] words = { "one", "two", "three", "four", "five" };
-            for (int i = 0; i < 5; i++)
+            if (!cond)
             {
-                tree.Insert(words[i], i + 1);
+                throw new Exception("AssertError");
             }
-            var keys = tree.Keys();
-            Console.WriteLine(tree);
-            Console.WriteLine(keys);
-            Console.WriteLine(tree.Length);
-            Console.WriteLine(tree);
-            tree.Remove("one");
-            Console.WriteLine(tree);
         }
 
+        private static void RunTree()
+        {
+            Tree<int, int> tree = new Tree<int, int>();
+            int[] values = { 12, 5, 15, 3, 7, 13, 17, 1, 9, 8, 11, 20, 18, 14 };
+
+            foreach (var value in values) {
+                tree.Insert(value, value);
+            }
+
+            int n = tree.Length;
+
+
+            foreach (var value in values)
+            {
+                Assert(tree.Length == n);
+                tree.Remove(value);
+                Assert(tree.Length == n - 1);
+                var keys = tree.Keys();
+                int[] indices = new int[keys.Length];
+                for (int i = 0; i < keys.Length - 1; i++)
+                {
+                    indices[i] = i;
+                }
+                bool isSorted = indices.All(i => keys[i] <= keys[i + 1]);
+                Assert(isSorted);
+                Assert(!keys.Contains(value));
+                tree.Clear();
+                Assert(tree.IsEmpty());
+                foreach (var v in values)
+                {
+                    tree.Insert(v, v);
+                }
+            }
+        }
+
+    
         static void Main(string[] args)
         {
             //RunList();

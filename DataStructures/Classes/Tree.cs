@@ -11,22 +11,21 @@ namespace DataStructures.Classes
         private TreeNode<K, V> _left;
         private TreeNode<K, V> _right;
         private TreeNode<K, V> _parent;
-        private int _level;
-        private int _hash;
+        //private int _level;
+        //private int _hash;
 
-
-        public TreeNode(K key, V value, int level)
+        public TreeNode(K key, V value)
         {
             _key = key;
             _value = value;
             _left = null;
             _right = null;
             _parent = null;
-            _level = level;
-            _hash = key.GetHashCode();
+            //_level = level;
+            //_hash = key.GetHashCode();
         }
 
-        public TreeNode() : this(default(K), default(V), 0)
+        public TreeNode() : this(default(K), default(V))
         { }
 
         public K Key
@@ -59,10 +58,9 @@ namespace DataStructures.Classes
             set { _parent = value; }
         }
 
-        public int Level { get => _level; }
+        //public int Level { get => _level; }
 
-        public int Hash { get => _hash; }
-
+        //public int Hash { get => _hash; }
 
         public bool IsLeaf
         {
@@ -85,7 +83,19 @@ namespace DataStructures.Classes
 
         public override string ToString()
         {
-            return "(" + _key.ToString() + ", " + _value.ToString() + ")";
+            string parentKey = (_parent != null) ? _parent._key.ToString() : "-";
+            if (_left != null && _right != null) {
+                return string.Join(", ", new string[] { _key.ToString(), _left._key.ToString(), _right._key.ToString(), parentKey });
+            }
+            if (_left != null)
+            {
+                return string.Join(", ", new string[] { _key.ToString(), _left._key.ToString(), "-", parentKey });
+            }
+            if (_right != null)
+            {
+                return string.Join(", ", new string[] { _key.ToString(), "-", _right._key.ToString(), parentKey });
+            }
+            return string.Join(", ", new string[] { _key.ToString(), "-", "-", parentKey });
         }
     }
 
@@ -125,15 +135,15 @@ namespace DataStructures.Classes
             TreeNode<K, V> node = _root;
             while (node != null)
             {
-                if (node.Key.GetHashCode() == key.GetHashCode())
+                if (node.Key.Equals(key))
                 {
                     return node;
                 }
-                if (key.GetHashCode() < node.Key.GetHashCode())
+                if (key.CompareTo(node.Key) < 0)
                 {
                     node = node.Left;
                 }
-                else if (key.GetHashCode() > node.Key.GetHashCode())
+                else if (key.CompareTo(node.Key) > 0)
                 {
                     node = node.Right;
                 }
@@ -145,34 +155,34 @@ namespace DataStructures.Classes
         {
             if (_root == null)
             {
-                _root = new TreeNode<K, V>(key, value, 0);
+                _root = new TreeNode<K, V>(key, value);
                 _length++;
                 return;
             }
             TreeNode<K, V> node = _root;
             while (node != null)
             {
-                if (node.Key.GetHashCode() == key.GetHashCode())
+                if (node.Key.Equals(key))
                 {
                     return;
                 }
-                if (node.Left != null && key.GetHashCode() < node.Key.GetHashCode())
+                if (node.Left != null && key.CompareTo(node.Key) < 0)
                 {
                     node = node.Left;
                     continue;
                 }
-                if (node.Right != null && key.GetHashCode() > node.Key.GetHashCode())
+                if (node.Right != null && key.CompareTo(node.Key) > 0)
                 {
                     node = node.Right;
                     continue;
                 }
                 break;
             }
-            int level = node.Level + 1;
-            TreeNode<K, V> newNode = new TreeNode<K, V>(key, value, level);
+            //int level = node.Level + 1;
+            TreeNode<K, V> newNode = new TreeNode<K, V>(key, value);
             newNode.Parent = node;
 
-            if (key.GetHashCode() < node.Key.GetHashCode())
+            if (key.CompareTo(node.Key) < 0)
             {
                 node.Left = newNode;
             }
@@ -202,148 +212,180 @@ namespace DataStructures.Classes
             _length = 0;
         }
 
-        private TreeNode<K, V> FindNextSuccessorOld(TreeNode<K, V> node)
+        public bool IsEmpty()
         {
-            if (node == null || node.Right == null)
-            {
-                return null;
-            }
-            TreeNode<K, V> succ = node.Right;
-            while (succ.Left != null)
-            {
-                succ = succ.Left;
-            }
-            return succ;
+            return _root == null && _length == 0;
         }
 
-        private TreeNode<K, V> FindNextSuccessor(TreeNode<K, V> node)
+        private void RemoveNodeWithoutTwoChildren(TreeNode<K, V> nodeToRemove)
         {
-            TreeNode<K, V> succ = null;
-            CList<TreeNode<K, V>> nodes = Nodes();
-            int i = 0;
-            for (; i < nodes.Length; i++)
+            //node is leaf
+            if (nodeToRemove.IsLeaf)
             {
-                if (node.Key.Equals(nodes[i].Key))
+                if (nodeToRemove == _root)
                 {
-                    break;
+                    _root = null;
+                    _length--;
+                }
+                else
+                {
+                    var parent = nodeToRemove.Parent;
+                    if (parent.Left == nodeToRemove)
+                    {
+                        parent.Left = null;
+                    }
+                    else
+                    {
+                        parent.Right = null;
+                    }
+                    nodeToRemove = null;
+                    _length--;
+                    return;
                 }
             }
-            succ = (i < nodes.Length - 1) ? nodes[i + 1] : null;
-            return succ;
+
+            // node has only left child
+            if (nodeToRemove.Left != null)
+            {
+                var leftNode = nodeToRemove.Left;
+                var parent = nodeToRemove.Parent;
+                if (parent.Left == nodeToRemove)
+                {
+                    parent.Left = leftNode;
+                }
+                else
+                {
+                    parent.Right = leftNode;
+                }
+                nodeToRemove = null;
+                _length--;
+                return;
+            }
+
+            // node has only right child
+            if (nodeToRemove.Right != null)
+            {
+                var rightNode = nodeToRemove.Right;
+                var parent = nodeToRemove.Parent;
+                if (parent.Left == nodeToRemove)
+                {
+                    parent.Left = rightNode;
+                }
+                else
+                {
+                    parent.Right = rightNode;
+                }
+                nodeToRemove = null;
+                _length--;
+                return;
+            }          
+        }
+
+        private TreeNode<K,V> FindMaxInLeftSubTree(TreeNode<K,V> node)
+        {
+            if (node.Left == null)
+            {
+                return node;
+            }
+            var maxNode = node.Left;
+            while (maxNode.Right != null)
+            {
+                maxNode = maxNode.Right;
+            }
+            return maxNode;
         }
 
         public void Remove(K key)
         {
-            TreeNode<K, V> node = Find(key);
-            if (node == null)
+            TreeNode<K, V> nodeToRemove = Find(key);
+            if (nodeToRemove == null)
             {
                 return;
             }
-            // node is a leaf
-            if (node.IsLeaf)
+            // node has no two children
+            if  (!(nodeToRemove.Left != null && nodeToRemove.Right != null))
             {
-                TreeNode<K, V> parent = node.Parent;
-                // node to be deleted is the root
-                if (parent == null)
-                {
-                    _root = null;
-                    return;
-                }
-                if (parent.Left == node)
-                {
-                    parent.Left = null;
-                }
-                else
-                {
-                    parent.Right = null;
-                }
-                node = null;
+                RemoveNodeWithoutTwoChildren(nodeToRemove);
                 return;
             }
-            // node has a single left child
-            if (node.Left != null && node.Right == null)
-            {
-                TreeNode<K, V> leftNode = node.Left;
-                node.Key = leftNode.Key;
-                node.Value = leftNode.Value;
-                node.Left = leftNode.Left;
-                node.Right = leftNode.Right;
-                node.Left = null;
-                return;
-            }
-            // node has a single right child
-            if (node.Right != null && node.Left == null)
-            {
-                TreeNode<K, V> rightNode = node.Right;
-                node.Key = rightNode.Key;
-                node.Value = rightNode.Value;
-                node.Left = rightNode.Left;
-                node.Right = rightNode.Right;
-                node.Right = null;
-                return;
-            }
-            // node has two children
-            if (node.Left != null && node.Right != null)
-            {
-                TreeNode<K, V> succ = FindNextSuccessor(node);
-                if (succ == null)
-                {
-                    return;
-                }
-                node.Key = succ.Key;
-                node.Value = succ.Value;
-                if (succ.Parent.Left == succ)
-                {
-                    succ.Parent.Left = null;
-                }
-                else
-                {
-                    succ.Parent.Right = null;
-                }
-                succ = null;
-            }
+
+            // node has both left and right children
+            // find max in left-subtree
+            var maxNode = FindMaxInLeftSubTree(nodeToRemove);
+            nodeToRemove.Key = maxNode.Key;
+            nodeToRemove.Value = maxNode.Value;
+
+            // Delete duplicate from left-subtree (this node does not have right child for sure)
+            RemoveNodeWithoutTwoChildren(maxNode);
         }
 
-        private void InorderScan(TreeNode<K, V> node, CList<K> list)
+        private void InorderScan(TreeNode<K, V> node, CList<TreeNode<K, V>> nodes)
         {
             if (node == null)
             {
                 return;
             }
-            InorderScan(node.Left, list);
-            list.Append(node.Key);
-            InorderScan(node.Right, list);
-        }
-
-        private void InorderScanNodes(TreeNode<K, V> node, CList<TreeNode<K, V>> nodes)
-        {
-            if (node == null)
-            {
-                return;
-            }
-            InorderScanNodes(node.Left, nodes);
+            InorderScan(node.Left, nodes);
             nodes.Append(node);
-            InorderScanNodes(node.Right, nodes);
+            InorderScan(node.Right, nodes);
+        }
+
+        private CList<Tuple<TreeNode<K, V>, int>> LevelOrderScan()
+        {
+            CList<Tuple<TreeNode<K, V>, int>> items = new CList<Tuple<TreeNode<K, V>, int>>();
+            if (_root == null)
+            {
+                return items;
+            }
+            CQueue<Tuple<TreeNode<K, V>, int>> queue = new CQueue<Tuple<TreeNode<K, V>, int>>();
+            queue.Enqueue(new Tuple<TreeNode<K, V>, int>(_root, 0));
+            while (queue.Size > 0)
+            {
+                var item = queue.Dequeue();
+                var node = item.Item1;
+                var level = item.Item2;
+                items.Append(item);
+                if (node.Left != null)
+                {
+                    queue.Enqueue(new Tuple<TreeNode<K, V>, int>(node.Left, level + 1));
+                }
+                if (node.Right != null){
+                    queue.Enqueue(new Tuple<TreeNode<K, V>, int>(node.Right, level + 1));
+                }
+            }
+            return items;
         }
 
         public CList<K> Keys()
         {
+            CList<TreeNode<K, V>> nodes = new CList<TreeNode<K, V>>();
+            InorderScan(_root, nodes);
             CList<K> keys = new CList<K>();
-            InorderScan(_root, keys);
+            foreach (var node in nodes)
+            {
+                keys.Append(node.Key);
+            }
             return keys;
         }
 
         public CList<TreeNode<K, V>> Nodes()
         {
             CList<TreeNode<K, V>> nodes = new CList<TreeNode<K, V>>();
-            InorderScanNodes(_root, nodes);
+            InorderScan(_root, nodes);
             return nodes;
         }
 
         public override string ToString()
         {
-            CList<TreeNode<K, V>> nodes = Nodes();  
-            return  "T:" + nodes;
+            var items = LevelOrderScan();
+            string[] results = new string[items.Length];
+            for (int i =0; i < items.Length; i++)
+            {
+                var item = items[i];
+                results[i] = "(" + item.Item1.ToString() + ", " + item.Item2.ToString() + ")";
+            }
+            string s = "[" + string.Join(", ", results) + "]";
+            return s;
         }
     }
 }
